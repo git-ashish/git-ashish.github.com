@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: blog | My Octopress Blog]]></title>
-  <link href="http://yoursite.com/blog/categories/blog/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
-  <updated>2013-02-02T06:45:24+05:30</updated>
-  <id>http://yoursite.com/</id>
+  <title><![CDATA[Category: blog | Ashish Singh]]></title>
+  <link href="http://git-ashish.github.com/blog/categories/blog/atom.xml" rel="self"/>
+  <link href="http://git-ashish.github.com/"/>
+  <updated>2013-02-02T06:53:25+05:30</updated>
+  <id>http://git-ashish.github.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Ashish Singh]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
+    <title type="html"><![CDATA[Hello World - Chao Procrastination]]></title>
+    <link href="http://git-ashish.github.com/blog/2013/02/02/hello-world-chao-procrastination/"/>
+    <updated>2013-02-02T06:51:00+05:30</updated>
+    <id>http://git-ashish.github.com/blog/2013/02/02/hello-world-chao-procrastination</id>
+    <content type="html"><![CDATA[<p>Hello all.</p>
+
+<p>It has been quite sometime since I entered the amazing world of Web development and the beauty of <a href="http://en.wikipedia.org/wiki/Open_source#Computer_software" title="Open Source Software">Open Source</a>.
+I intend to post things here, that will hopefully help some people in some ways. This is going to be an avenue for sharing stuff that I create or think are cool in my areas of interest. A lot of stuff here is going to be highly opinionated.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Goodmorning World]]></title>
-    <link href="http://yoursite.com/blog/2013/02/02/goodmorning-world/"/>
+    <link href="http://git-ashish.github.com/blog/2013/02/02/goodmorning-world/"/>
     <updated>2013-02-02T06:43:00+05:30</updated>
-    <id>http://yoursite.com/blog/2013/02/02/goodmorning-world</id>
+    <id>http://git-ashish.github.com/blog/2013/02/02/goodmorning-world</id>
     <content type="html"><![CDATA[<p>This is going to be amazing.</p>
 ]]></content>
   </entry>

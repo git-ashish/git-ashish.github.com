@@ -1,19 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://yoursite.com/blog/2013/02/02/goodmorning-world/</loc>
+        <loc>http://git-ashish.github.com/blog/2013/02/02/goodmorning-world/</loc>
         <lastmod>2013-02-02T06:44:57+05:30</lastmod>
     </url>
     <url>
-        <loc>http://yoursite.com/robots.txt</loc>
+        <loc>http://git-ashish.github.com/blog/2013/02/02/hello-world-chao-procrastination/</loc>
+        <lastmod>2013-02-02T06:52:41+05:30</lastmod>
+    </url>
+    <url>
+        <loc>http://git-ashish.github.com/robots.txt</loc>
         <lastmod>2013-02-02T06:43:12+05:30</lastmod>
     </url>
     <url>
-        <loc>http://yoursite.com/</loc>
-        <lastmod>2013-02-02T06:44:57+05:30</lastmod>
+        <loc>http://git-ashish.github.com/</loc>
+        <lastmod>2013-02-02T06:52:41+05:30</lastmod>
     </url>
     <url>
-        <loc>http://yoursite.com/blog/archives/</loc>
-        <lastmod>2013-02-02T06:44:57+05:30</lastmod>
+        <loc>http://git-ashish.github.com/blog/archives/</loc>
+        <lastmod>2013-02-02T06:52:41+05:30</lastmod>
     </url>
 </urlset>
