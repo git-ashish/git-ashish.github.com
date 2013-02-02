@@ -1,6 +1,7 @@
 require "rubygems"
 require "bundler/setup"
 require "stringex"
+require "twitter"
 
 ## -- Rsync Deploy config -- ##
 # Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
@@ -9,10 +10,10 @@ ssh_port       = "22"
 document_root  = "~/website.com/"
 rsync_delete   = false
 rsync_args     = ""  # Any extra arguments to pass to rsync
-deploy_default = "rsync"
+deploy_default = "push"
 
 # This will be configured for you when you run config_deploy
-deploy_branch  = "gh-pages"
+deploy_branch  = "master"
 
 ## -- Misc Configs -- ##
 
@@ -43,6 +44,20 @@ task :install, :theme do |t, args|
   mkdir_p "#{source_dir}/#{posts_dir}"
   mkdir_p public_dir
 end
+
+#######################################
+# Twitter config (for tweeting posts) #
+#######################################
+Twitter.configure do |config|
+  config.consumer_key = "Ch6nGJabhu7vHWjQnWLPg"
+  config.consumer_secret = "LuasxrMqxMw5qA9FIp0mM0BwivbZyUlFZepi60lYrk"
+  config.oauth_token = "80401462-8uYnKnPkK0SpVk528lvjMJaYWKyqxTY5OZlsUPZOE"
+  config.oauth_token_secret = "LgVsQlWhn4YTxNx2uq3uZtF0xvk74VjTbvwilHsjZQ"
+end
+
+# URL of your blog e.g. http://deductiveblog.in/blog/
+# MAKE SURE THERE IS A TRAILING SLASH, otherwise the linking won't work
+blog_url = "http://deductiveblog.in/"
 
 #######################
 # Working with Jekyll #
@@ -89,6 +104,7 @@ task :preview do
   [jekyllPid, compassPid, rackupPid].each { |pid| Process.wait(pid) }
 end
 
+=begin
 # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
 desc "Begin a new post in #{source_dir}/#{posts_dir}"
 task :new_post, :title do |t, args|
@@ -112,6 +128,38 @@ task :new_post, :title do |t, args|
     post.puts "comments: true"
     post.puts "categories: "
     post.puts "---"
+  end
+end
+=end
+
+# usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
+desc "Begin a new post in #{source_dir}/#{posts_dir}"
+task :new_post, :title, :tweet do |t, args|
+  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
+  mkdir_p "#{source_dir}/#{posts_dir}"
+  args.with_defaults(:title => 'new-post', :tweet => '')
+  title = args.title
+  filename = "#{source_dir}/#{posts_dir}/#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}.#{new_post_ext}"
+  if File.exist?(filename)
+    abort("rake aborted!") if ask("#{filename} already exists. Do you want to overwrite?", ['y', 'n']) == 'n'
+  end
+  puts "Creating new post: #{filename}"
+  open(filename, 'w') do |post|
+    post.puts "---"
+    post.puts "layout: post"
+    post.puts "title: \"#{title.gsub(/&/,'&')}\""
+    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
+    post.puts "comments: true"
+    post.puts "categories: "
+    post.puts "---"
+  end
+  tweet = args.tweet
+  if not tweet == ''
+    # add to twitter status queue
+    puts 'Adding post to tweet queue, it will be tweeted after deploying.'
+    open('tweet_queue', 'a') do |file|
+      file.puts "#{tweet} - #{blog_url}#{Time.now.strftime('%Y/%m/%d')}/#{title.to_url}/"
+    end
   end
 end
 
@@ -221,6 +269,20 @@ task :deploy do
 
   Rake::Task[:copydot].invoke(source_dir, public_dir)
   Rake::Task["#{deploy_default}"].execute
+
+  # Tweet
+  next if not File.exists? 'tweet_queue'
+  puts "Tweeting..."
+  client = Twitter::Client.new
+  open('tweet_queue', 'r') do |file|
+    while (line = file.gets)
+      puts "Tweeting '#{line.gsub("\n", "")}' for @#{client.current_user.screen_name}..."
+      Twitter.update line
+    end
+  end
+  puts "Deleting queue..."
+  rm 'tweet_queue'
+  
 end
 
 desc "Generate website and deploy"
