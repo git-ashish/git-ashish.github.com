@@ -4,7 +4,7 @@
   <title><![CDATA[Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-02-02T16:19:53+05:30</updated>
+  <updated>2013-02-23T00:36:23+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Setup SMTP on Bugzilla]]></title>
+    <link href="http://git-ashish.github.com/blog/2013/02/22/setup-smtp-on-bugzilla/"/>
+    <updated>2013-02-22T23:33:00+05:30</updated>
+    <id>http://git-ashish.github.com/blog/2013/02/22/setup-smtp-on-bugzilla</id>
+    <content type="html"><![CDATA[<p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
+
+<p>We are hosting it on Ubuntu 12.04 LTS 64bit Amazon EC2 micro instance and using Amazon RDS mysql as backend. For sending bugzilla emails alerts, we choose SMTP.</p>
+
+<p>We followed this <a href="http://dawood.in/bugzilla-alerts-using-gmail/">guide</a> but ran into some problems on the first step of installing perl module <a href="http://search.cpan.org/~fayland/Email-Send-SMTP-TLS-0.04/lib/Email/Send/SMTP/TLS.pm">Email::Send::SMTP::TLS</a>. The error we got was</p>
+
+<p><em>Building and testing Net-SSLeay-1.52 &#8230; FAIL</em></p>
+
+<p>This probably means that your Ubuntu is missing the Perl module for Secure Sockets Layer (SSL). You install it like this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install libnet-ssleay-perl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, we go ahead with the installation of Email::Send::SMTP::TLS module.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install cpanminus
+</span><span class='line'>sudo cpanm Email::Send::SMTP::TLS</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, continue following this <a href="http://dawood.in/bugzilla-alerts-using-gmail/">guide</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hello World - Chao Procrastination]]></title>

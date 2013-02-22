@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: github - Ashish Singh</title>
+  <title>Setup SMTP on Bugzilla - Ashish Singh</title>
   <meta name="author" content="Ashish Singh">
 
   
-  <meta name="description" content="Category: github">
+  <meta name="description" content="Our startup just celebrated its 1st anniversary and we marked this by making bugzilla our primary bug tracker. The bugzilla docs will help you &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://git-ashish.github.comblog/categories/github/">
+  <link rel="canonical" href="http://git-ashish.github.com/blog/2013/02/22/setup-smtp-on-bugzilla/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -75,36 +75,113 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Github</h1>
+    
+      <h1 class="entry-title">Setup SMTP on Bugzilla</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-22T23:33:00+05:30" pubdate data-updated="true">Feb 22<span>nd</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
 
-  
-  <h2>2013</h2>
+<p>We are hosting it on Ubuntu 12.04 LTS 64bit Amazon EC2 micro instance and using Amazon RDS mysql as backend. For sending bugzilla emails alerts, we choose SMTP.</p>
 
-<article>
-  
-<h1><a href="/blog/2013/02/02/goodmorning-world/">Goodmorning World</a></h1>
-<time datetime="2013-02-02T06:43:00+05:30" pubdate><span class='month'>Feb</span> <span class='day'>02</span> <span class='year'>2013</span></time>
+<p>We followed this <a href="http://dawood.in/bugzilla-alerts-using-gmail/">guide</a> but ran into some problems on the first step of installing perl module <a href="http://search.cpan.org/~fayland/Email-Send-SMTP-TLS-0.04/lib/Email/Send/SMTP/TLS.pm">Email::Send::SMTP::TLS</a>. The error we got was</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/blog/'>blog</a>, <a class='category' href='/blog/categories/github/'>github</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a></span>
-</footer>
+<p><em>Building and testing Net-SSLeay-1.52 &#8230; FAIL</em></p>
+
+<p>This probably means that your Ubuntu is missing the Perl module for Secure Sockets Layer (SSL). You install it like this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install libnet-ssleay-perl</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>Next, we go ahead with the installation of Email::Send::SMTP::TLS module.</p>
 
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install cpanminus
+</span><span class='line'>sudo cpanm Email::Send::SMTP::TLS</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, continue following this <a href="http://dawood.in/bugzilla-alerts-using-gmail/">guide</a></p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Ashish Singh</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-22T23:33:00+05:30" pubdate data-updated="true">Feb 22<span>nd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bugzilla/'>bugzilla</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://git-ashish.github.com/blog/2013/02/22/setup-smtp-on-bugzilla/" data-via="ashish_k_singh" data-counturl="http://git-ashish.github.com/blog/2013/02/22/setup-smtp-on-bugzilla/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/02/hello-world-chao-procrastination/" title="Previous Post: Hello World - Chao Procrastination">&laquo; Hello World - Chao Procrastination</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -206,7 +283,10 @@
       var disqus_shortname = 'deductiveblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://git-ashish.github.com/blog/2013/02/22/setup-smtp-on-bugzilla/';
+        var disqus_url = 'http://git-ashish.github.com/blog/2013/02/22/setup-smtp-on-bugzilla/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
