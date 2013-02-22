@@ -4,7 +4,7 @@
   <title><![CDATA[Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-02-23T00:36:23+05:30</updated>
+  <updated>2013-02-23T01:52:31+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Setup SMTP on Bugzilla]]></title>
-    <link href="http://git-ashish.github.com/blog/2013/02/22/setup-smtp-on-bugzilla/"/>
+    <link href="http://git-ashish.github.com/2013/02/22/setup-smtp-on-bugzilla/"/>
     <updated>2013-02-22T23:33:00+05:30</updated>
-    <id>http://git-ashish.github.com/blog/2013/02/22/setup-smtp-on-bugzilla</id>
+    <id>http://git-ashish.github.com/2013/02/22/setup-smtp-on-bugzilla</id>
     <content type="html"><![CDATA[<p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
 
 <p>We are hosting it on Ubuntu 12.04 LTS 64bit Amazon EC2 micro instance and using Amazon RDS mysql as backend. For sending bugzilla emails alerts, we choose SMTP.</p>
@@ -46,9 +46,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hello World - Chao Procrastination]]></title>
-    <link href="http://git-ashish.github.com/blog/2013/02/02/hello-world-chao-procrastination/"/>
+    <link href="http://git-ashish.github.com/2013/02/02/hello-world-chao-procrastination/"/>
     <updated>2013-02-02T06:51:00+05:30</updated>
-    <id>http://git-ashish.github.com/blog/2013/02/02/hello-world-chao-procrastination</id>
+    <id>http://git-ashish.github.com/2013/02/02/hello-world-chao-procrastination</id>
     <content type="html"><![CDATA[<p>Hello all.</p>
 
 <p>It has been quite sometime since I entered the amazing world of Web development and the beauty of <a href="http://en.wikipedia.org/wiki/Open_source#Computer_software" title="Open Source Software">Open Source</a>.
@@ -58,9 +58,9 @@ I intend to post things here, that will hopefully help some people in some ways.
   
   <entry>
     <title type="html"><![CDATA[Goodmorning World]]></title>
-    <link href="http://git-ashish.github.com/blog/2013/02/02/goodmorning-world/"/>
+    <link href="http://git-ashish.github.com/2013/02/02/goodmorning-world/"/>
     <updated>2013-02-02T06:43:00+05:30</updated>
-    <id>http://git-ashish.github.com/blog/2013/02/02/goodmorning-world</id>
+    <id>http://git-ashish.github.com/2013/02/02/goodmorning-world</id>
     <content type="html"><![CDATA[<p>This is going to be amazing.</p>
 ]]></content>
   </entry>

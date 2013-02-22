@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: github | Ashish Singh]]></title>
-  <link href="http://git-ashish.github.com/blog/categories/github/atom.xml" rel="self"/>
+  <title><![CDATA[Category: octopress | Ashish Singh]]></title>
+  <link href="http://git-ashish.github.com/categories/octopress/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-02-23T00:36:23+05:30</updated>
+  <updated>2013-02-23T01:52:31+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Goodmorning World]]></title>
-    <link href="http://git-ashish.github.com/blog/2013/02/02/goodmorning-world/"/>
+    <link href="http://git-ashish.github.com/2013/02/02/goodmorning-world/"/>
     <updated>2013-02-02T06:43:00+05:30</updated>
-    <id>http://git-ashish.github.com/blog/2013/02/02/goodmorning-world</id>
+    <id>http://git-ashish.github.com/2013/02/02/goodmorning-world</id>
     <content type="html"><![CDATA[<p>This is going to be amazing.</p>
 ]]></content>
   </entry>
