@@ -4,7 +4,7 @@
   <title><![CDATA[Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-02-23T01:52:31+05:30</updated>
+  <updated>2013-03-15T19:41:15+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -14,11 +14,96 @@
 
   
   <entry>
+    <title type="html"><![CDATA[When Options -Indexes in .htaccess doesn't work]]></title>
+    <link href="http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/"/>
+    <updated>2013-03-15T19:26:00+05:30</updated>
+    <id>http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work</id>
+    <content type="html"><![CDATA[<p>We&#8217;ve our sandbox server running on Amazon EC2. There are a lot of projects hosted there with each project&#8217;s .htaccess taking care of it. Apart from the various tasks that the .htaccess does, it restricts directory browsing using simple directive</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_autoindex.c&gt;
+</span><span class='line'>  Options -Indexes
+</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But somehow on the root folder of the sandbox, this directive didn&#8217;t work. This implies, a directory specific directive was somewhere being issues. These are a few places to look for</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/apache2/httpd.conf
+</span><span class='line'>/etc/apache2/apache.conf
+</span><span class='line'>/etc/apache2/sites-enabled/000-default</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In our case, the below directives were present in the <code>/etc/apache2/sites-enabled/000-default</code> file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
+</span><span class='line'>&lt;Directory /&gt;
+</span><span class='line'>        Options FollowSymLinks
+</span><span class='line'>        AllowOverride None
+</span><span class='line'>&lt;/Directory&gt;
+</span><span class='line'>&lt;Directory /var/www/&gt;
+</span><span class='line'>        Options Indexes FollowSymLinks MultiViews Includes
+</span><span class='line'>        AllowOverride None
+</span><span class='line'>        Order allow,deny
+</span><span class='line'>        allow from all
+</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was changed to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
+</span><span class='line'>&lt;Directory /&gt;
+</span><span class='line'>        #Options FollowSymLinks
+</span><span class='line'>        Options -Indexes
+</span><span class='line'>        #AllowOverride None
+</span><span class='line'>&lt;/Directory&gt;
+</span><span class='line'>&lt;Directory /var/www/&gt;
+</span><span class='line'>        #Options Indexes FollowSymLinks MultiViews Includes
+</span><span class='line'>        #AllowOverride None
+</span><span class='line'>        #Order allow,deny
+</span><span class='line'>        #allow from all
+</span><span class='line'>        Options -Indexes
+</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and it worked!</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Setup SMTP on Bugzilla]]></title>
     <link href="http://git-ashish.github.com/2013/02/22/setup-smtp-on-bugzilla/"/>
     <updated>2013-02-22T23:33:00+05:30</updated>
     <id>http://git-ashish.github.com/2013/02/22/setup-smtp-on-bugzilla</id>
-    <content type="html"><![CDATA[<p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
+    <content type="html"><![CDATA[<p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="http://www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
 
 <p>We are hosting it on Ubuntu 12.04 LTS 64bit Amazon EC2 micro instance and using Amazon RDS mysql as backend. For sending bugzilla emails alerts, we choose SMTP.</p>
 

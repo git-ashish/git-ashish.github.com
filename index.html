@@ -9,7 +9,7 @@
   <meta name="author" content="Ashish Singh">
 
   
-  <meta name="description" content="Our startup just celebrated its 1st anniversary and we marked this by making bugzilla our primary bug tracker. The bugzilla docs will help you &hellip;">
+  <meta name="description" content="We&#8217;ve our sandbox server running on Amazon EC2. There are a lot of projects hosted there with each project&#8217;s .htaccess taking care of it &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,118 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/">When Options -Indexes in .htaccess Doesn&#8217;t Work</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-15T19:26:00+05:30" pubdate data-updated="true">Mar 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We&#8217;ve our sandbox server running on Amazon EC2. There are a lot of projects hosted there with each project&#8217;s .htaccess taking care of it. Apart from the various tasks that the .htaccess does, it restricts directory browsing using simple directive</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_autoindex.c&gt;
+</span><span class='line'>  Options -Indexes
+</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But somehow on the root folder of the sandbox, this directive didn&#8217;t work. This implies, a directory specific directive was somewhere being issues. These are a few places to look for</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/apache2/httpd.conf
+</span><span class='line'>/etc/apache2/apache.conf
+</span><span class='line'>/etc/apache2/sites-enabled/000-default</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In our case, the below directives were present in the <code>/etc/apache2/sites-enabled/000-default</code> file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
+</span><span class='line'>&lt;Directory /&gt;
+</span><span class='line'>        Options FollowSymLinks
+</span><span class='line'>        AllowOverride None
+</span><span class='line'>&lt;/Directory&gt;
+</span><span class='line'>&lt;Directory /var/www/&gt;
+</span><span class='line'>        Options Indexes FollowSymLinks MultiViews Includes
+</span><span class='line'>        AllowOverride None
+</span><span class='line'>        Order allow,deny
+</span><span class='line'>        allow from all
+</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was changed to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
+</span><span class='line'>&lt;Directory /&gt;
+</span><span class='line'>        #Options FollowSymLinks
+</span><span class='line'>        Options -Indexes
+</span><span class='line'>        #AllowOverride None
+</span><span class='line'>&lt;/Directory&gt;
+</span><span class='line'>&lt;Directory /var/www/&gt;
+</span><span class='line'>        #Options Indexes FollowSymLinks MultiViews Includes
+</span><span class='line'>        #AllowOverride None
+</span><span class='line'>        #Order allow,deny
+</span><span class='line'>        #allow from all
+</span><span class='line'>        Options -Indexes
+</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and it worked!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/2013/02/22/setup-smtp-on-bugzilla/">Setup SMTP on Bugzilla</a></h1>
     
     
@@ -105,7 +217,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
+  <div class="entry-content"><p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="http://www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
 
 <p>We are hosting it on Ubuntu 12.04 LTS 64bit Amazon EC2 micro instance and using Amazon RDS mysql as backend. For sending bugzilla emails alerts, we choose SMTP.</p>
 
@@ -221,6 +333,10 @@ I intend to post things here, that will hopefully help some people in some ways.
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/">When Options -Indexes in .htaccess doesn&#8217;t work</a>
+      </li>
     
       <li class="post">
         <a href="/2013/02/22/setup-smtp-on-bugzilla/">Setup SMTP on Bugzilla</a>

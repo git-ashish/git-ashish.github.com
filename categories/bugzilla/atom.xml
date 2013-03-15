@@ -4,7 +4,7 @@
   <title><![CDATA[Category: bugzilla | Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/categories/bugzilla/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-02-23T01:52:31+05:30</updated>
+  <updated>2013-03-15T19:41:15+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -18,7 +18,7 @@
     <link href="http://git-ashish.github.com/2013/02/22/setup-smtp-on-bugzilla/"/>
     <updated>2013-02-22T23:33:00+05:30</updated>
     <id>http://git-ashish.github.com/2013/02/22/setup-smtp-on-bugzilla</id>
-    <content type="html"><![CDATA[<p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
+    <content type="html"><![CDATA[<p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="http://www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
 
 <p>We are hosting it on Ubuntu 12.04 LTS 64bit Amazon EC2 micro instance and using Amazon RDS mysql as backend. For sending bugzilla emails alerts, we choose SMTP.</p>
 

@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Goodmorning World - Ashish Singh</title>
+  <title>When Options -Indexes in .htaccess doesn't work - Ashish Singh</title>
   <meta name="author" content="Ashish Singh">
 
   
-  <meta name="description" content="This is going to be amazing.
-">
+  <meta name="description" content="We&#8217;ve our sandbox server running on Amazon EC2. There are a lot of projects hosted there with each project&#8217;s .htaccess taking care of it &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://git-ashish.github.com/2013/02/02/goodmorning-world/">
+  <link rel="canonical" href="http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">Goodmorning World</h1>
+      <h1 class="entry-title">When Options -Indexes in .htaccess Doesn't Work</h1>
     
     
       <p class="meta">
@@ -96,14 +95,90 @@
   
 
 
-<time datetime="2013-02-02T06:43:00+05:30" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
+<time datetime="2013-03-15T19:26:00+05:30" pubdate data-updated="true">Mar 15<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>This is going to be amazing.</p>
+<div class="entry-content"><p>We&#8217;ve our sandbox server running on Amazon EC2. There are a lot of projects hosted there with each project&#8217;s .htaccess taking care of it. Apart from the various tasks that the .htaccess does, it restricts directory browsing using simple directive</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_autoindex.c&gt;
+</span><span class='line'>  Options -Indexes
+</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But somehow on the root folder of the sandbox, this directive didn&#8217;t work. This implies, a directory specific directive was somewhere being issues. These are a few places to look for</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/apache2/httpd.conf
+</span><span class='line'>/etc/apache2/apache.conf
+</span><span class='line'>/etc/apache2/sites-enabled/000-default</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In our case, the below directives were present in the <code>/etc/apache2/sites-enabled/000-default</code> file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
+</span><span class='line'>&lt;Directory /&gt;
+</span><span class='line'>        Options FollowSymLinks
+</span><span class='line'>        AllowOverride None
+</span><span class='line'>&lt;/Directory&gt;
+</span><span class='line'>&lt;Directory /var/www/&gt;
+</span><span class='line'>        Options Indexes FollowSymLinks MultiViews Includes
+</span><span class='line'>        AllowOverride None
+</span><span class='line'>        Order allow,deny
+</span><span class='line'>        allow from all
+</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was changed to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
+</span><span class='line'>&lt;Directory /&gt;
+</span><span class='line'>        #Options FollowSymLinks
+</span><span class='line'>        Options -Indexes
+</span><span class='line'>        #AllowOverride None
+</span><span class='line'>&lt;/Directory&gt;
+</span><span class='line'>&lt;Directory /var/www/&gt;
+</span><span class='line'>        #Options Indexes FollowSymLinks MultiViews Includes
+</span><span class='line'>        #AllowOverride None
+</span><span class='line'>        #Order allow,deny
+</span><span class='line'>        #allow from all
+</span><span class='line'>        Options -Indexes
+</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and it worked!</p>
 </div>
 
 
@@ -126,21 +201,15 @@
   
 
 
-<time datetime="2013-02-02T06:43:00+05:30" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
+<time datetime="2013-03-15T19:26:00+05:30" pubdate data-updated="true">Mar 15<span>th</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/categories/blog/'>blog</a>, <a class='category' href='/categories/github/'>github</a>, <a class='category' href='/categories/octopress/'>octopress</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://git-ashish.github.com/2013/02/02/goodmorning-world/" data-via="ashish_k_singh" data-counturl="http://git-ashish.github.com/2013/02/02/goodmorning-world/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/" data-via="ashish_k_singh" data-counturl="http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/" >Tweet</a>
   
   
   
@@ -149,8 +218,8 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/2013/02/22/setup-smtp-on-bugzilla/" title="Previous Post: Setup SMTP on Bugzilla">&laquo; Setup SMTP on Bugzilla</a>
       
-        <a class="basic-alignment right" href="/2013/02/02/hello-world-chao-procrastination/" title="Next Post: Hello World - Chao Procrastination">Hello World - Chao Procrastination &raquo;</a>
       
     </p>
   </footer>
@@ -267,8 +336,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://git-ashish.github.com/2013/02/02/goodmorning-world/';
-        var disqus_url = 'http://git-ashish.github.com/2013/02/02/goodmorning-world/';
+        var disqus_identifier = 'http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/';
+        var disqus_url = 'http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/';
         var disqus_script = 'embed.js';
       
     (function () {
