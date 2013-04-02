@@ -4,7 +4,7 @@
   <title><![CDATA[Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-04-03T00:34:31+05:30</updated>
+  <updated>2013-04-03T00:46:09+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Buffer auto Deploy Test]]></title>
+    <link href="http://git-ashish.github.com/2013/04/03/buffer-auto-deploy-test/"/>
+    <updated>2013-04-03T00:35:00+05:30</updated>
+    <id>http://git-ashish.github.com/2013/04/03/buffer-auto-deploy-test</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[When Options -Indexes in .htaccess doesn't work]]></title>
