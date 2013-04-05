@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Ashish Singh</title>
+  <title>Auto deploy to Buffer - Ashish Singh</title>
   <meta name="author" content="Ashish Singh">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://git-ashish.github.com/">
+  <link rel="canonical" href="http://git-ashish.github.com/2013/04/06/auto-deploy-to-buffer/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -74,15 +74,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/2013/04/06/auto-deploy-to-buffer/">Auto Deploy to Buffer</a></h1>
+      <h1 class="entry-title">Auto Deploy to Buffer</h1>
     
     
       <p class="meta">
@@ -105,7 +102,7 @@
   </header>
 
 
-  <div class="entry-content"><p>Octopress is a great simple tool for blogging. A lot of custom stuff can be built upon it. Here is how you can use <a href="https://bufferapp.com">BufferApp</a> to share you posts to your social networks.</p>
+<div class="entry-content"><p>Octopress is a great simple tool for blogging. A lot of custom stuff can be built upon it. Here is how you can use <a href="https://bufferapp.com">BufferApp</a> to share you posts to your social networks.</p>
 
 <h2>Access Token</h2>
 
@@ -439,134 +436,16 @@
 
 <h4><em>Happy blogging</em>.</h4>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/">When Options -Indexes in .htaccess Doesn&#8217;t Work</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Ashish Singh</span></span>
 
-<time datetime="2013-03-15T19:48:00+05:30" pubdate data-updated="true">Mar 15<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We&#8217;ve our sandbox server running on Amazon EC2. There are a lot of projects hosted there with each project&#8217;s .htaccess taking care of it. Apart from the various tasks that the .htaccess does, it restricts directory browsing using simple directive</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_autoindex.c&gt;
-</span><span class='line'>  Options -Indexes
-</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But somehow on the root folder of the sandbox, this directive didn&#8217;t work. This implies, a directory specific directive was somewhere being issues. These are a few places to look for</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/apache2/httpd.conf
-</span><span class='line'>/etc/apache2/apache.conf
-</span><span class='line'>/etc/apache2/sites-enabled/000-default</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In our case, the below directives were present in the <code>/etc/apache2/sites-enabled/000-default</code> file.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
-</span><span class='line'>&lt;Directory /&gt;
-</span><span class='line'>        Options FollowSymLinks
-</span><span class='line'>        AllowOverride None
-</span><span class='line'>&lt;/Directory&gt;
-</span><span class='line'>&lt;Directory /var/www/&gt;
-</span><span class='line'>        Options Indexes FollowSymLinks MultiViews Includes
-</span><span class='line'>        AllowOverride None
-</span><span class='line'>        Order allow,deny
-</span><span class='line'>        allow from all
-</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was changed to</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
-</span><span class='line'>&lt;Directory /&gt;
-</span><span class='line'>        #Options FollowSymLinks
-</span><span class='line'>        Options -Indexes
-</span><span class='line'>        #AllowOverride None
-</span><span class='line'>&lt;/Directory&gt;
-</span><span class='line'>&lt;Directory /var/www/&gt;
-</span><span class='line'>        #Options Indexes FollowSymLinks MultiViews Includes
-</span><span class='line'>        #AllowOverride None
-</span><span class='line'>        #Order allow,deny
-</span><span class='line'>        #allow from all
-</span><span class='line'>        Options -Indexes
-</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and it worked!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/02/22/setup-smtp-on-bugzilla/">Setup SMTP on Bugzilla</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -578,124 +457,38 @@
   
 
 
-<time datetime="2013-02-22T23:33:00+05:30" pubdate data-updated="true">Feb 22<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="http://www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
-
-<p>We are hosting it on Ubuntu 12.04 LTS 64bit Amazon EC2 micro instance and using Amazon RDS mysql as backend. For sending bugzilla emails alerts, we choose SMTP.</p>
-
-<p>We followed this <a href="http://dawood.in/bugzilla-alerts-using-gmail/">guide</a> but ran into some problems on the first step of installing perl module <a href="http://search.cpan.org/~fayland/Email-Send-SMTP-TLS-0.04/lib/Email/Send/SMTP/TLS.pm">Email::Send::SMTP::TLS</a>. The error we got was</p>
-
-<p><em>Building and testing Net-SSLeay-1.52 &#8230; FAIL</em></p>
-
-<p>This probably means that your Ubuntu is missing the Perl module for Secure Sockets Layer (SSL). You install it like this.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install libnet-ssleay-perl</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Next, we go ahead with the installation of Email::Send::SMTP::TLS module.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install cpanminus
-</span><span class='line'>sudo cpanm Email::Send::SMTP::TLS</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, continue following this <a href="http://dawood.in/bugzilla-alerts-using-gmail/">guide</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2013-04-06T01:09:00+05:30" pubdate data-updated="true">Apr 6<span>th</span>, 2013</time>
       
-  <header>
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/2013/02/02/hello-world-chao-procrastination/">Hello World - Chao Procrastination</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
+      <div class="sharing">
   
-
-
-<time datetime="2013-02-02T06:51:00+05:30" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Hello all.</p>
-
-<p>It has been quite sometime since I entered the amazing world of Web development and the beauty of <a href="http://en.wikipedia.org/wiki/Open_source#Computer_software" title="Open Source Software">Open Source</a>.
-I intend to post things here, that will hopefully help some people in some ways. This is going to be an avenue for sharing stuff that I create or think are cool in my areas of interest. A lot of stuff here is going to be highly opinionated.</p>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://git-ashish.github.com/2013/04/06/auto-deploy-to-buffer/" data-via="ashish_k_singh" data-counturl="http://git-ashish.github.com/2013/04/06/auto-deploy-to-buffer/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/02/02/goodmorning-world/">Goodmorning World</a></h1>
-    
-    
-      <p class="meta">
-        
+        <a class="basic-alignment left" href="/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/" title="Previous Post: When Options -Indexes in .htaccess doesn't work">&laquo; When Options -Indexes in .htaccess doesn't work</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-02T06:43:00+05:30" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is going to be amazing.</p>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  
-  
+  </section>
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   
     <section>
@@ -707,7 +500,7 @@ I intend to post things here, that will hopefully help some people in some ways.
       </li>
     
       <li class="post">
-        <a href="/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/">When Options -Indexes in .htaccess doesn&#8217;t work</a>
+        <a href="/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/">When Options -Indexes in .htaccess doesn't work</a>
       </li>
     
       <li class="post">
@@ -728,7 +521,7 @@ I intend to post things here, that will hopefully help some people in some ways.
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/git-ashish">@git-ashish</a> on GitHub
@@ -758,7 +551,7 @@ I intend to post things here, that will hopefully help some people in some ways.
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -787,6 +580,7 @@ I intend to post things here, that will hopefully help some people in some ways.
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -801,7 +595,10 @@ I intend to post things here, that will hopefully help some people in some ways.
       var disqus_shortname = 'deductiveblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://git-ashish.github.com/2013/04/06/auto-deploy-to-buffer/';
+        var disqus_url = 'http://git-ashish.github.com/2013/04/06/auto-deploy-to-buffer/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
