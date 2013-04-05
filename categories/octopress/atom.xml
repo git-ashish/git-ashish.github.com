@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/categories/octopress/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-04-03T01:17:18+05:30</updated>
+  <updated>2013-04-06T01:02:49+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -12,6 +12,254 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Auto deploy to BufferApp]]></title>
+    <link href="http://git-ashish.github.com/2013/04/03/bufferapp-autodeploye-testing/"/>
+    <updated>2013-04-03T01:17:00+05:30</updated>
+    <id>http://git-ashish.github.com/2013/04/03/bufferapp-autodeploye-testing</id>
+    <content type="html"><![CDATA[<p>Octopress is a great simple tool for blogging. A lot of custom stuff can be built upon it. Here is how you can use <a href="https://bufferapp.com">BufferApp</a> to share you posts to your social networks.</p>
+
+<h2>Access Token</h2>
+
+<p>Create an app in your Buffer account and get the app's access token.</p>
+
+<h2>Buffer gem</h2>
+
+<p>Install Buffer gem using</p>
+
+<p><code>
+gem install buffer
+</code></p>
+
+<p>Open the Gemfile and edit below section to make it look like this.</p>
+
+<p><code>ruby
+group :development do
+  gem 'rake', '~&gt; 0.9'
+  gem 'rack', '~&gt; 1.4.1'
+  gem 'jekyll', '~&gt; 0.12'
+  gem 'rdiscount', '~&gt; 1.6.8'
+  gem 'kramdown', '~&gt; 0.13'
+  gem 'coderay', '~&gt; 1.0'
+  gem 'pygments.rb', '~&gt; 0.3.4'
+  gem 'RedCloth', '~&gt; 4.2.9'
+  gem 'haml', '~&gt; 3.1.7'
+  gem 'compass', '~&gt; 0.12.2'
+  gem 'rubypants', '~&gt; 0.2.0'
+  gem 'rb-fsevent', '~&gt; 0.9'
+  gem 'stringex', '~&gt; 1.4.0'
+  gem 'liquid', '~&gt; 2.3.0'
+  gem 'twitter'
+  gem 'addressable'
+  gem 'buffer'
+end
+</code></p>
+
+<p>Note the addition of last gems. You need these for bufferapp to work.</p>
+
+<p>``` ruby
+gem 'addressable'
+gem 'buffer'</p>
+
+<p>```</p>
+
+<h2>Rakefile</h2>
+
+<p>Define Access Token</p>
+
+<p>Open Rakefile and add this line after</p>
+
+<p>``` ruby</p>
+
+<h2>-- Misc Configs -- ## ```</h2>
+
+<p>buffer_access_token = 'your_buffer_access_token'
+```</p>
+
+<p>Adding posts to Buffer Queue</p>
+
+<p>In the Rakefile, find this section</p>
+
+<p>``` ruby</p>
+
+<h1>usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")</h1>
+
+<p>desc "Begin a new post in #{source_dir}/#{posts_dir}"
+task :new_post, :title do |t, args|
+  if args.title</p>
+
+<pre><code>title = args.title
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>title = get_stdin("Enter a title for your post: ")
+</code></pre>
+
+<p>  end
+  raise "### You haven't set anything up yet. First run <code>rake install</code> to set up an Octopress theme." unless File.directory?(source_dir)
+  mkdir_p "#{source_dir}/#{posts_dir}"
+  filename = "#{source_dir}/#{posts_dir}/#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}.#{new_post_ext}"
+  if File.exist?(filename)</p>
+
+<pre><code>abort("rake aborted!") if ask("#{filename} already exists. Do you want to overwrite?", ['y', 'n']) == 'n'
+</code></pre>
+
+<p>  end
+  puts "Creating new post: #{filename}"
+  open(filename, 'w') do |post|</p>
+
+<pre><code>post.puts "---"
+post.puts "layout: post"
+post.puts "title: \"#{title.gsub(/&amp;/,'&amp;amp;')}\""
+post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
+post.puts "comments: true"
+post.puts "categories: "
+post.puts "---"
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Modify it into this</p>
+
+<p>``` ruby</p>
+
+<h1>usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")</h1>
+
+<p>desc "Begin a new post in #{source_dir}/#{posts_dir}"
+task :new_post, :title, :buffer do |t, args|
+  raise "### You haven't set anything up yet. First run <code>rake install</code> to set up an Octopress theme." unless File.directory?(source_dir)
+  mkdir_p "#{source_dir}/#{posts_dir}"
+  args.with_defaults(:title => 'new-post', :tweet => '')
+  title = args.title
+  filename = "#{source_dir}/#{posts_dir}/#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}.#{new_post_ext}"
+  if File.exist?(filename)</p>
+
+<pre><code>abort("rake aborted!") if ask("#{filename} already exists. Do you want to overwrite?", ['y', 'n']) == 'n'
+</code></pre>
+
+<p>  end
+  puts "Creating new post: #{filename}"
+  open(filename, 'w') do |post|</p>
+
+<pre><code>post.puts "---"
+post.puts "layout: post"
+post.puts "title: \"#{title.gsub(/&amp;/,'&amp;')}\""
+post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
+post.puts "comments: true"
+post.puts "categories: "
+post.puts "---"
+</code></pre>
+
+<p>  end</p>
+
+<p>  buffer = args.buffer
+  if not buffer == ''</p>
+
+<pre><code># add to bufferapp status queue
+puts 'Adding post to Bufferapp queue, it will be pushed after deploying.'
+open('buffer_queue', 'a') do |file|
+  file.puts "#{buffer} - #{blog_url}#{Time.now.strftime('%Y/%m/%d')}/#{title.to_url}/"
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Pushing posts to Bufferapp</p>
+
+<p>In the Rakefile, find this section</p>
+
+<p>``` ruby</p>
+
+<h6>#</h6>
+
+<h1>Deploying</h1>
+
+<h6>#</h6>
+
+<p>desc "Default deploy task"
+task :deploy do</p>
+
+<pre><code># Check if preview posts exist, which should not be published
+if File.exists?(".preview-mode")
+    puts "## Found posts in preview mode, regenerating files ..."
+    File.delete(".preview-mode")
+    Rake::Task[:generate].execute
+end
+
+Rake::Task[:copydot].invoke(source_dir, public_dir)
+Rake::Task["#{deploy_default}"].execute
+</code></pre>
+
+<p>end
+```</p>
+
+<p>Make it look like this</p>
+
+<p>``` ruby</p>
+
+<h6>#</h6>
+
+<h1>Deploying</h1>
+
+<h6>#</h6>
+
+<p>desc "Default deploy task"
+task :deploy do</p>
+
+<pre><code># Check if preview posts exist, which should not be published
+if File.exists?(".preview-mode")
+    puts "## Found posts in preview mode, regenerating files ..."
+    File.delete(".preview-mode")
+    Rake::Task[:generate].execute
+end
+
+Rake::Task[:copydot].invoke(source_dir, public_dir)
+Rake::Task["#{deploy_default}"].execute
+
+# Buffer
+next if not File.exists? 'buffer_queue'
+puts "Buffering..."
+bufferapp = Buffer::Client.new buffer_access_token
+open('buffer_queue', 'r') do |file|
+while (line = file.gets)
+  puts "Buffering '#{line.gsub("\n", "")}' ..."
+  # ud = bufferapp.api :get, 'profiles'
+  # TODO - get profiles automatically
+  ud = bufferapp.api :post, 'updates/create', :text =&gt; line, :profile_ids =&gt; ['5xxxxxxxxxxxxxxxx','5xxxxxxxxxxxxxxx']
+  puts ud
+end
+</code></pre>
+
+<p>end
+puts "Deleting queue..."
+rm 'buffer_queue'</p>
+
+<p>end
+```</p>
+
+<p>profile_ids - you can see two values in the above code as <code>5xxxxxxxxxxxxxxxxx</code>. These are the Buffer profiles or linked social accounts where you would like to share the blog post. You can get this id from the URL of your linked social buffer account when you visit the Bufferapp dashboard.
+<code>https://bufferapp.com/app/profile/5xxxxxxxxxxxxxxxxx/buffer</code></p>
+
+<h2>Sharing</h2>
+
+<p>Now, everything necessary to Buffer your blog post is setup. All you need is to create the blog post. To create a blog post you write
+<code>ruby
+rake new_post['my_awesome_blog_post_name']
+</code>
+For blog posts which you want to share via Bufferapp, you write
+<code>ruby
+rake new_post['my_awesome_blog_post_name','my_awesome_blog_post_title_to_be_shared_via_buffer']
+</code></p>
+
+<h4><em>Happy blogging</em>.</h4>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Goodmorning World]]></title>
