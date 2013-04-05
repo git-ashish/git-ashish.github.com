@@ -4,7 +4,7 @@
   <title><![CDATA[Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-04-06T01:10:18+05:30</updated>
+  <updated>2013-04-06T01:12:22+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -19,6 +19,9 @@
     <updated>2013-04-06T01:09:00+05:30</updated>
     <id>http://git-ashish.github.com/2013/04/06/auto-deploy-to-buffer</id>
     <content type="html"><![CDATA[<p>Octopress is a great simple tool for blogging. A lot of custom stuff can be built upon it. Here is how you can use <a href="https://bufferapp.com">BufferApp</a> to share you posts to your social networks.</p>
+
+<!-- more -->
+
 
 <h2>Access Token</h2>
 
