@@ -5,6 +5,8 @@ group :development do
   gem 'rack', '~> 1.4.1'
   gem 'jekyll', '~> 0.12'
   gem 'rdiscount', '~> 1.6.8'
+  gem 'kramdown', '~> 0.13'
+  gem 'coderay', '~> 1.0'
   gem 'pygments.rb', '~> 0.3.4'
   gem 'RedCloth', '~> 4.2.9'
   gem 'haml', '~> 3.1.7'
@@ -14,6 +16,8 @@ group :development do
   gem 'stringex', '~> 1.4.0'
   gem 'liquid', '~> 2.3.0'
   gem 'twitter'
+  gem 'addressable'
+  gem 'buffer'
 end
 
 gem 'sinatra', '~> 1.3.3'

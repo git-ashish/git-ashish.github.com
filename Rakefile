@@ -2,6 +2,7 @@ require "rubygems"
 require "bundler/setup"
 require "stringex"
 require "twitter"
+require "buffer"
 
 ## -- Rsync Deploy config -- ##
 # Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
@@ -27,7 +28,12 @@ themes_dir      = ".themes"   # directory for blog files
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
-
+############################################
+# Buffer config (for pushing to Bufferapp) #
+############################################
+buffer_access_token = "1/710479794a12a983e40cecccbacfa25b"  # bufferapp access token
+buffer_client_id = "515b0cf89253bca851000002" # bufferapp client_id
+buffer_access_token_secret = "17786a7934032c70ae2ade1694c44e67" # bufferapp access token secret
 
 desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
 task :install, :theme do |t, args|
@@ -54,6 +60,8 @@ Twitter.configure do |config|
   config.oauth_token = "80401462-8uYnKnPkK0SpVk528lvjMJaYWKyqxTY5OZlsUPZOE"
   config.oauth_token_secret = "LgVsQlWhn4YTxNx2uq3uZtF0xvk74VjTbvwilHsjZQ"
 end
+
+
 
 # URL of your blog e.g. http://deductiveblog.in/blog/
 # MAKE SURE THERE IS A TRAILING SLASH, otherwise the linking won't work
@@ -134,7 +142,7 @@ end
 
 # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
 desc "Begin a new post in #{source_dir}/#{posts_dir}"
-task :new_post, :title, :tweet do |t, args|
+task :new_post, :title, :tweet, :buffer do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   mkdir_p "#{source_dir}/#{posts_dir}"
   args.with_defaults(:title => 'new-post', :tweet => '')
@@ -159,6 +167,15 @@ task :new_post, :title, :tweet do |t, args|
     puts 'Adding post to tweet queue, it will be tweeted after deploying.'
     open('tweet_queue', 'a') do |file|
       file.puts "#{tweet} - #{blog_url}#{Time.now.strftime('%Y/%m/%d')}/#{title.to_url}/"
+    end
+  end
+
+  buffer = args.buffer
+  if not buffer == ''
+    # add to bufferapp status queue
+    puts 'Adding post to Bufferapp queue, it will be pushed after deploying.'
+    open('buffer_queue', 'a') do |file|
+      file.puts "#{buffer} - #{blog_url}#{Time.now.strftime('%Y/%m/%d')}/#{title.to_url}/"
     end
   end
 end
@@ -282,6 +299,23 @@ task :deploy do
   end
   puts "Deleting queue..."
   rm 'tweet_queue'
+
+
+  # Buffer
+  next if not File.exists? 'buffer_queue'
+  puts "Buffering..."
+  bufferapp = Buffer::Client.new buffer_access_token
+  open('buffer_queue', 'r') do |file|
+    while (line = file.gets)
+      puts "Buffering '#{line.gsub("\n", "")}' ..."
+      # ud = bufferapp.api :get, 'profiles'
+      # TODO - get profiles automatically
+      ud = bufferapp.api :post, 'updates/create', :text => line, :profile_ids => ['51149e964dbf085e10000015','51149f964dbf084f11000015']
+      puts ud
+    end
+  end
+  puts "Deleting queue..."
+  rm 'buffer_queue'
   
 end
 
