@@ -4,7 +4,7 @@
   <title><![CDATA[Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-04-26T00:07:14+05:30</updated>
+  <updated>2013-05-19T23:17:20+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -12,6 +12,162 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Deploy to Amazon EC2 using GIT]]></title>
+    <link href="http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git/"/>
+    <updated>2013-05-19T22:22:00+05:30</updated>
+    <id>http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git</id>
+    <content type="html"><![CDATA[<p><a href="http://git-scm.com/" title="Git‎">Git</a> is an amazing and indispensable tool. We use it for tracking all of our development work. It just becomes more cooler when you are able to push your code to a production or sandbox server with a simple <a href="http://git-scm.com/book/ch2-5.html%E2%80%8E">git push</a>.</p>
+
+<p>Below listed are simple yet powerful steps to get you pushing your code to an Amazon EC2 server or any other linux server, where you have <a href="http://en.wikipedia.org/wiki/Secure_Shell%E2%80%8E">SSH</a> access.</p>
+
+<h2>Install git on your Server</h2>
+
+<p>From you local machine</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh -i /path/to/my-amazon-key.pem ec2-user@example-webserver.amazonaws.com
+</span><span class='line'>
+</span><span class='line'>// on your ec2 server
+</span><span class='line'>ubuntu@ip-xxx-xxx-xx-xxx:~$ sudo apt-get install git</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Setup SSH Access</h2>
+
+<p>You need SSH access to the server in order to push your code.
+If you have more than one servers to push to, you need to manage more than one SSH keys. You can configure the SSH config file to do that job. Open up <code>~/.ssh/config</code> file and add this code for each of your hosts. Replace Host, Hostname, User and IdentityFile values with yours.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host my-prod-server
+</span><span class='line'>Hostname example-webserver.amazonaws.com
+</span><span class='line'>User ec2-user
+</span><span class='line'>IdentityFile /path/to/my-amazon-key.pem
+</span><span class='line'>
+</span><span class='line'>Host my-sandbox-server
+</span><span class='line'>Hostname example-webserver.amazonaws.com
+</span><span class='line'>User ec2-user
+</span><span class='line'>IdentityFile /path/to/my-sandbox-amazon-key.pem</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Test the connection</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh my-prod-server</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hurray, if you get connected to your server otherwise debug using this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh -Tvvv my-prod-server</span></code></pre></td></tr></table></div></figure>
+
+
+<!-- more -->
+
+
+<h2>Setup Git Repo on Amazon EC2 Server</h2>
+
+<p>You need one git repo to push to from you work station. Let&#8217;s set it up.
+In directory /home/ubuntu/</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir -p git-repo/my-git-repo.git
+</span><span class='line'>cd git-repo/my-git-repo.git
+</span><span class='line'>git init --bare</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, you remote git repo on EC2 is setup.</p>
+
+<h2>Add Amazon EC2 git repo as remote in your local git repo</h2>
+
+<p>On your local machine&#8217;s git repo, add Amazon EC2 git repo as a remote.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote add production my-prod-server:/home/ubuntu/git-repo/my-git-repo.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, a remote git repo is setup and you can also use it as a private git repo as an alternative to Github.</p>
+
+<p>Let&#8217;s make it work to push the code to the webserver.</p>
+
+<h2>Post-receive Hook on Amazon EC2 git repo</h2>
+
+<p>Up till now you&#8217;ve setup a working remote git repo on Amazon EC2 server. To push your code to the apache web directory <code>/var/www/example.com/public_html/</code>, we&#8217;ll need to add a <a href="http://git-scm.com/book/en/Customizing-Git-Git-Hooks">post-receive hook</a>.</p>
+
+<p>Go to your git repo on Amazon EC2 <code>/home/ubuntu/git-repo/my-git-repo.git</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /home/ubuntu/git-repo/my-git-repo.git
+</span><span class='line'>
+</span><span class='line'>vi hooks/post-receive</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add following code in the file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>
+</span><span class='line'>while read oldrev newrev ref
+</span><span class='line'>do
+</span><span class='line'>  branch=`echo $ref | cut -d/ -f3`
+</span><span class='line'>  if [ "production" == "$branch" -o "master" == "$branch" ]; then
+</span><span class='line'>    
+</span><span class='line'>    git --work-tree=/var/www/example.com/public_html/ checkout -f $branch
+</span><span class='line'>    
+</span><span class='line'>    echo 'Changes pushed to Amazon EC2 PROD.'
+</span><span class='line'>  fi
+</span><span class='line'>
+</span><span class='line'>  if [ "smoke" == "$branch" ]; then
+</span><span class='line'>    
+</span><span class='line'>    git --work-tree=/var/www/example.com/public_html/smoke/ checkout -f $branch
+</span><span class='line'>    
+</span><span class='line'>    echo 'Changes pushed to Amazon EC2 PROD smoke box.'
+</span><span class='line'>  fi
+</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The first <code>if</code> block will copy the working directory code of <code>production</code> or <code>master</code> branch of the repo, to the web server path whenever you push the code to this remote git repo.</p>
+
+<p>Similarly, if you push a <code>smoke</code> named branch to the Amazon ec2 git repo, it will copy the code to smoke test directory <code>/var/www/example.com/public_html/smoke/</code>.</p>
+
+<p>So effectively, there are two purposes getting solved here. First, you can user the server for hosting your code&#8217;s git repo. Second, for pushing the code to server directory without doing any FTP.</p>
+
+<p>Happy Git-ting!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Auto deploy to Buffer]]></title>

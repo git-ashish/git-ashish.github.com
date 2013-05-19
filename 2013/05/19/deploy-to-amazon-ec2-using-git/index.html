@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Ashish Singh</title>
+  <title>Deploy to Amazon EC2 using GIT - Ashish Singh</title>
   <meta name="author" content="Ashish Singh">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://git-ashish.github.com/">
+  <link rel="canonical" href="http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -74,15 +74,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/2013/05/19/deploy-to-amazon-ec2-using-git/">Deploy to Amazon EC2 Using GIT</a></h1>
+      <h1 class="entry-title">Deploy to Amazon EC2 Using GIT</h1>
     
     
       <p class="meta">
@@ -105,7 +102,7 @@
   </header>
 
 
-  <div class="entry-content"><p><a href="http://git-scm.com/" title="Git‎">Git</a> is an amazing and indispensable tool. We use it for tracking all of our development work. It just becomes more cooler when you are able to push your code to a production or sandbox server with a simple <a href="http://git-scm.com/book/ch2-5.html%E2%80%8E">git push</a>.</p>
+<div class="entry-content"><p><a href="http://git-scm.com/" title="Git‎">Git</a> is an amazing and indispensable tool. We use it for tracking all of our development work. It just becomes more cooler when you are able to push your code to a production or sandbox server with a simple <a href="http://git-scm.com/book/ch2-5.html%E2%80%8E">git push</a>.</p>
 
 <p>Below listed are simple yet powerful steps to get you pushing your code to an Amazon EC2 server or any other linux server, where you have <a href="http://en.wikipedia.org/wiki/Secure_Shell%E2%80%8E">SSH</a> access.</p>
 
@@ -160,133 +157,51 @@ If you have more than one servers to push to, you need to manage more than one S
 </pre></td><td class='code'><pre><code class=''><span class='line'>ssh -Tvvv my-prod-server</span></code></pre></td></tr></table></div></figure>
 
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2013/05/19/deploy-to-amazon-ec2-using-git/">Read on &rarr;</a>
-    </footer>
-  
+<!-- more -->
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/04/06/auto-deploy-to-buffer/">Auto Deploy to Buffer</a></h1>
-    
-    
-      <p class="meta">
-        
+<h2>Setup Git Repo on Amazon EC2 Server</h2>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-06T01:09:00+05:30" pubdate data-updated="true">Apr 6<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Octopress is a great simple tool for blogging. A lot of custom stuff can be built upon it. Here is how you can use <a href="https://bufferapp.com">BufferApp</a> to share you posts to your social networks.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2013/04/06/auto-deploy-to-buffer/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/">When Options -Indexes in .htaccess Doesn&#8217;t Work</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-15T19:48:00+05:30" pubdate data-updated="true">Mar 15<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We&#8217;ve our sandbox server running on Amazon EC2. There are a lot of projects hosted there with each project&#8217;s .htaccess taking care of it. Apart from the various tasks that the .htaccess does, it restricts directory browsing using simple directive</p>
+<p>You need one git repo to push to from you work station. Let&#8217;s set it up.
+In directory /home/ubuntu/</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;IfModule mod_autoindex.c&gt;
-</span><span class='line'>  Options -Indexes
-</span><span class='line'>&lt;/IfModule&gt;</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir -p git-repo/my-git-repo.git
+</span><span class='line'>cd git-repo/my-git-repo.git
+</span><span class='line'>git init --bare</span></code></pre></td></tr></table></div></figure>
 
 
-<p>But somehow on the root folder of the sandbox, this directive didn&#8217;t work. This implies, a directory specific directive was somewhere being issues. These are a few places to look for</p>
+<p>Now, you remote git repo on EC2 is setup.</p>
+
+<h2>Add Amazon EC2 git repo as remote in your local git repo</h2>
+
+<p>On your local machine&#8217;s git repo, add Amazon EC2 git repo as a remote.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote add production my-prod-server:/home/ubuntu/git-repo/my-git-repo.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, a remote git repo is setup and you can also use it as a private git repo as an alternative to Github.</p>
+
+<p>Let&#8217;s make it work to push the code to the webserver.</p>
+
+<h2>Post-receive Hook on Amazon EC2 git repo</h2>
+
+<p>Up till now you&#8217;ve setup a working remote git repo on Amazon EC2 server. To push your code to the apache web directory <code>/var/www/example.com/public_html/</code>, we&#8217;ll need to add a <a href="http://git-scm.com/book/en/Customizing-Git-Git-Hooks">post-receive hook</a>.</p>
+
+<p>Go to your git repo on Amazon EC2 <code>/home/ubuntu/git-repo/my-git-repo.git</code></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/apache2/httpd.conf
-</span><span class='line'>/etc/apache2/apache.conf
-</span><span class='line'>/etc/apache2/sites-enabled/000-default</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /home/ubuntu/git-repo/my-git-repo.git
+</span><span class='line'>
+</span><span class='line'>vi hooks/post-receive</span></code></pre></td></tr></table></div></figure>
 
 
-<p>In our case, the below directives were present in the <code>/etc/apache2/sites-enabled/000-default</code> file.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
-</span><span class='line'>&lt;Directory /&gt;
-</span><span class='line'>        Options FollowSymLinks
-</span><span class='line'>        AllowOverride None
-</span><span class='line'>&lt;/Directory&gt;
-</span><span class='line'>&lt;Directory /var/www/&gt;
-</span><span class='line'>        Options Indexes FollowSymLinks MultiViews Includes
-</span><span class='line'>        AllowOverride None
-</span><span class='line'>        Order allow,deny
-</span><span class='line'>        allow from all
-</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was changed to</p>
+<p>Add following code in the file</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -301,97 +216,51 @@ If you have more than one servers to push to, you need to manage more than one S
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>DocumentRoot /var/www
-</span><span class='line'>&lt;Directory /&gt;
-</span><span class='line'>        #Options FollowSymLinks
-</span><span class='line'>        Options -Indexes
-</span><span class='line'>        #AllowOverride None
-</span><span class='line'>&lt;/Directory&gt;
-</span><span class='line'>&lt;Directory /var/www/&gt;
-</span><span class='line'>        #Options Indexes FollowSymLinks MultiViews Includes
-</span><span class='line'>        #AllowOverride None
-</span><span class='line'>        #Order allow,deny
-</span><span class='line'>        #allow from all
-</span><span class='line'>        Options -Indexes
-</span><span class='line'>&lt;/Directory&gt;</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>
+</span><span class='line'>while read oldrev newrev ref
+</span><span class='line'>do
+</span><span class='line'>  branch=`echo $ref | cut -d/ -f3`
+</span><span class='line'>  if [ "production" == "$branch" -o "master" == "$branch" ]; then
+</span><span class='line'>    
+</span><span class='line'>    git --work-tree=/var/www/example.com/public_html/ checkout -f $branch
+</span><span class='line'>    
+</span><span class='line'>    echo 'Changes pushed to Amazon EC2 PROD.'
+</span><span class='line'>  fi
+</span><span class='line'>
+</span><span class='line'>  if [ "smoke" == "$branch" ]; then
+</span><span class='line'>    
+</span><span class='line'>    git --work-tree=/var/www/example.com/public_html/smoke/ checkout -f $branch
+</span><span class='line'>    
+</span><span class='line'>    echo 'Changes pushed to Amazon EC2 PROD smoke box.'
+</span><span class='line'>  fi
+</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
 
 
-<p>and it worked!</p>
+<p>The first <code>if</code> block will copy the working directory code of <code>production</code> or <code>master</code> branch of the repo, to the web server path whenever you push the code to this remote git repo.</p>
+
+<p>Similarly, if you push a <code>smoke</code> named branch to the Amazon ec2 git repo, it will copy the code to smoke test directory <code>/var/www/example.com/public_html/smoke/</code>.</p>
+
+<p>So effectively, there are two purposes getting solved here. First, you can user the server for hosting your code&#8217;s git repo. Second, for pushing the code to server directory without doing any FTP.</p>
+
+<p>Happy Git-ting!</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/02/22/setup-smtp-on-bugzilla/">Setup SMTP on Bugzilla</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Ashish Singh</span></span>
 
-<time datetime="2013-02-22T23:33:00+05:30" pubdate data-updated="true">Feb 22<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Our startup just celebrated its 1st anniversary and we marked this by making <a href="http://www.bugzilla.org">bugzilla</a> our primary bug tracker. The bugzilla <a href="http://www.bugzilla.org/docs/4.2/en/html/index.html">docs</a> will help you setting it up.</p>
-
-<p>We are hosting it on Ubuntu 12.04 LTS 64bit Amazon EC2 micro instance and using Amazon RDS mysql as backend. For sending bugzilla emails alerts, we choose SMTP.</p>
-
-<p>We followed this <a href="http://dawood.in/bugzilla-alerts-using-gmail/">guide</a> but ran into some problems on the first step of installing perl module <a href="http://search.cpan.org/~fayland/Email-Send-SMTP-TLS-0.04/lib/Email/Send/SMTP/TLS.pm">Email::Send::SMTP::TLS</a>. The error we got was</p>
-
-<p><em>Building and testing Net-SSLeay-1.52 &#8230; FAIL</em></p>
-
-<p>This probably means that your Ubuntu is missing the Perl module for Secure Sockets Layer (SSL). You install it like this.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install libnet-ssleay-perl</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Next, we go ahead with the installation of Email::Send::SMTP::TLS module.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install cpanminus
-</span><span class='line'>sudo cpanm Email::Send::SMTP::TLS</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, continue following this <a href="http://dawood.in/bugzilla-alerts-using-gmail/">guide</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/2013/02/02/hello-world-chao-procrastination/">Hello World - Chao Procrastination</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -403,66 +272,38 @@ If you have more than one servers to push to, you need to manage more than one S
   
 
 
-<time datetime="2013-02-02T06:51:00+05:30" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Hello all.</p>
-
-<p>It has been quite sometime since I entered the amazing world of Web development and the beauty of <a href="http://en.wikipedia.org/wiki/Open_source#Computer_software" title="Open Source Software">Open Source</a>.
-I intend to post things here, that will hopefully help some people in some ways. This is going to be an avenue for sharing stuff that I create or think are cool in my areas of interest. A lot of stuff here is going to be highly opinionated.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2013-05-19T22:22:00+05:30" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
       
-  <header>
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/2013/02/02/goodmorning-world/">Goodmorning World</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
+      <div class="sharing">
   
-
-
-<time datetime="2013-02-02T06:43:00+05:30" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is going to be amazing.</p>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git/" data-via="ashish_k_singh" data-counturl="http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/04/06/auto-deploy-to-buffer/" title="Previous Post: Auto deploy to Buffer">&laquo; Auto deploy to Buffer</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -478,7 +319,7 @@ I intend to post things here, that will hopefully help some people in some ways.
       </li>
     
       <li class="post">
-        <a href="/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/">When Options -Indexes in .htaccess doesn&#8217;t work</a>
+        <a href="/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/">When Options -Indexes in .htaccess doesn't work</a>
       </li>
     
       <li class="post">
@@ -495,7 +336,7 @@ I intend to post things here, that will hopefully help some people in some ways.
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/git-ashish">@git-ashish</a> on GitHub
@@ -525,7 +366,7 @@ I intend to post things here, that will hopefully help some people in some ways.
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -554,6 +395,7 @@ I intend to post things here, that will hopefully help some people in some ways.
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -569,7 +411,10 @@ I intend to post things here, that will hopefully help some people in some ways.
       var disqus_shortname = 'deductiveblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git/';
+        var disqus_url = 'http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
