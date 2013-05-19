@@ -16,15 +16,15 @@
         <loc>
             http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/
         </loc>
-        <lastmod>2013-03-15T19:49:44+05:30</lastmod>
+        <lastmod>2013-05-19T23:23:25+05:30</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/2013/04/06/auto-deploy-to-buffer/</loc>
-        <lastmod>2013-04-06T01:12:16+05:30</lastmod>
+        <lastmod>2013-05-19T23:23:34+05:30</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git/</loc>
-        <lastmod>2013-05-19T23:19:16+05:30</lastmod>
+        <lastmod>2013-05-19T23:23:44+05:30</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/robots.txt</loc>
@@ -32,10 +32,10 @@
     </url>
     <url>
         <loc>http://git-ashish.github.com/</loc>
-        <lastmod>2013-05-19T23:19:16+05:30</lastmod>
+        <lastmod>2013-05-19T23:23:44+05:30</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/blog/archives/</loc>
-        <lastmod>2013-05-19T23:19:16+05:30</lastmod>
+        <lastmod>2013-05-19T23:23:44+05:30</lastmod>
     </url>
 </urlset>
