@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Deploy to Amazon EC2 using GIT"
-date: 2013-12-02 18:04
+date: 2013-05-19 18:04
 comments: true
 categories: [amazon, aws, ec2, git]
 ---
