@@ -4,7 +4,7 @@
   <title><![CDATA[Category: amazon | Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/categories/amazon/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-12-02T18:07:07+05:30</updated>
+  <updated>2013-12-02T18:08:15+05:30</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Deploy to Amazon EC2 using GIT]]></title>
-    <link href="http://git-ashish.github.com/2013/12/02/deploy-to-amazon-ec2-using-git/"/>
-    <updated>2013-12-02T18:04:00+05:30</updated>
-    <id>http://git-ashish.github.com/2013/12/02/deploy-to-amazon-ec2-using-git</id>
+    <link href="http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git/"/>
+    <updated>2013-05-19T18:04:00+05:30</updated>
+    <id>http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git</id>
     <content type="html"><![CDATA[<p><a href="http://git-scm.com/" title="Git‎">Git</a> is an amazing and indispensable tool. We use it for tracking all of our development work. It just becomes more cooler when you are able to push your code to a production or sandbox server with a simple <a href="http://git-scm.com/book/ch2-5.html%E2%80%8E">git push</a>.</p>
 
 <p>Below listed are simple yet powerful steps to get you pushing your code to an Amazon EC2 server or any other linux server, where you have <a href="http://en.wikipedia.org/wiki/Secure_Shell%E2%80%8E">SSH</a> access.</p>
