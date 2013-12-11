@@ -2,40 +2,46 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://git-ashish.github.com/2013/02/02/goodmorning-world/</loc>
-        <lastmod>2013-02-02T06:44:57+05:30</lastmod>
+        <lastmod>2013-02-01T17:14:57-08:00</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/2013/02/02/hello-world-chao-procrastination/</loc>
-        <lastmod>2013-02-02T06:52:41+05:30</lastmod>
+        <lastmod>2013-02-01T17:22:41-08:00</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/2013/02/22/setup-smtp-on-bugzilla/</loc>
-        <lastmod>2013-03-15T19:40:38+05:30</lastmod>
+        <lastmod>2013-03-15T07:10:38-07:00</lastmod>
     </url>
     <url>
         <loc>
             http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/
         </loc>
-        <lastmod>2013-05-19T23:23:25+05:30</lastmod>
+        <lastmod>2013-05-19T10:53:25-07:00</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/2013/04/06/auto-deploy-to-buffer/</loc>
-        <lastmod>2013-05-19T23:23:34+05:30</lastmod>
+        <lastmod>2013-05-19T10:53:34-07:00</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/2013/05/19/deploy-to-amazon-ec2-using-git/</loc>
-        <lastmod>2013-12-02T18:07:42+05:30</lastmod>
+        <lastmod>2013-12-02T04:37:42-08:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://git-ashish.github.com/2013/12/11/javascript-date-difference-using-format-yyyy-mm-dd/
+        </loc>
+        <lastmod>2013-12-11T11:22:02-08:00</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/robots.txt</loc>
-        <lastmod>2013-02-02T06:43:12+05:30</lastmod>
+        <lastmod>2013-02-01T17:13:12-08:00</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/</loc>
-        <lastmod>2013-12-02T18:07:42+05:30</lastmod>
+        <lastmod>2013-12-11T11:22:02-08:00</lastmod>
     </url>
     <url>
         <loc>http://git-ashish.github.com/blog/archives/</loc>
-        <lastmod>2013-12-02T18:07:42+05:30</lastmod>
+        <lastmod>2013-12-11T11:22:02-08:00</lastmod>
     </url>
 </urlset>

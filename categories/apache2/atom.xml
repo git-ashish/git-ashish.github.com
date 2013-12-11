@@ -4,7 +4,7 @@
   <title><![CDATA[Category: apache2 | Ashish Singh]]></title>
   <link href="http://git-ashish.github.com/categories/apache2/atom.xml" rel="self"/>
   <link href="http://git-ashish.github.com/"/>
-  <updated>2013-12-02T18:56:39+05:30</updated>
+  <updated>2013-12-11T11:22:13-08:00</updated>
   <id>http://git-ashish.github.com/</id>
   <author>
     <name><![CDATA[Ashish Singh]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[When Options -Indexes in .htaccess doesn't work]]></title>
     <link href="http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work/"/>
-    <updated>2013-03-15T19:48:00+05:30</updated>
+    <updated>2013-03-15T19:48:00-07:00</updated>
     <id>http://git-ashish.github.com/2013/03/15/when-options-indexes-in-htaccess-doesnt-work</id>
     <content type="html"><![CDATA[<p>We've our sandbox server running on Amazon EC2. There are a lot of projects hosted there with each project's .htaccess taking care of it. Apart from the various tasks that the .htaccess does, it restricts directory browsing using simple directive</p>
 
