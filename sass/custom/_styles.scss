@@ -15,3 +15,15 @@ color: #555;
     }
   }
 }
+
+// Gist formatting
+.gist-file {
+  font-size:.8em !important;
+}
+
+.gist-file table.lines{
+  width: 100%;
+}
+.gist .gist-file .gist-meta a[href*='#file'] {
+	right: 0 !important;
+}
